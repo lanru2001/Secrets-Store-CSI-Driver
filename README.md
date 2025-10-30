@@ -1,4 +1,4 @@
-# Secrets-Store-CSI-Driver
+# Install the Secrets Store CSI Driver
 Use Secrets Store CSI Driver to pull secrets from AWS Secrets Manager
 
 Secrets Store CSI Driver Workflow
@@ -6,12 +6,12 @@ Below is the diagrammatic workflow of the Secret Stores CSI Driver, which gets s
 
 https://devopscube.com/content/images/2025/03/secret-store-csi-driver_2-1.jpg
 
-How it works?
+# How it works?
 1. The pod initiates the process by defining the SecretProviderClass object and uses a service account with the necessary permissions to authenticate Secrets Manager.
 2. The SecretProviderClass object contains the details of the secret stored in secrets manager..
 3. The CSI driver uses the secret details on SecretProviderClass to fetch the secret from the external secret store and mounts it inside the pod as a file.
 
-Step 1: Create an IAM Policy
+# Step 1: Create an IAM Policy
 ```bash
 resource "aws_iam_role" "csi_secrets_store_role" {
   name = "CsiSecretsStoreRole"
@@ -75,12 +75,12 @@ resource "aws_iam_role_policy_attachment" "csi_secrets_store_policy_attach" {
   policy_arn = aws_iam_policy.csi_secrets_store_policy.arn
 }
 ```
-Step 2: Install CSI Driver and AWS Provider
+# Step 2: Install CSI Driver and AWS Provider
 ```bash
 helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
 helm repo add aws-secrets-manager https://aws.github.io/secrets-store-csi-driver-provider-aws
 ```
-Step 3: Create a Service Account
+# Step 3: Create a Service Account
 ```bash
 # Kubernetes service account
 resource "kubernetes_service_account" "csi_secrets_store_driver_sa" {
@@ -98,7 +98,7 @@ resource "kubernetes_service_account" "csi_secrets_store_driver_sa" {
   
 }
 ```
-Step 4: Create a SecretProviderClass
+# Step 4: Create a SecretProviderClass
 ```bash
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
@@ -109,10 +109,10 @@ spec:
   provider: aws
   parameters:
     objects: |
-      - objectName: "testing-secrets-manager"
+      - objectName: "testing-secrets-manager" # secret name in AWS console
         objectType: "secretsmanager"
         jmesPath:
-          - path: "secret"
+          - path: "secret"       # secret key in AWS, no need to reference the value.
             objectAlias: "secrets-manager-secret"
   secretObjects:
     - secretName: external-secrets
@@ -131,14 +131,14 @@ spec:
   provider: aws
   parameters:
     objects: |
-      - objectName: "app-postgres-secret"
+      - objectName: "app-postgres-secret" # secret name in AWS console
         objectType: "secretsmanager"
         jmesPath:
-          - path: "password"
+          - path: "password" # secret key in AWS, no need to reference the value.
             objectAlias: "secrets-manager-password"
-          - path: "username"
+          - path: "username" # secret key in AWS, no need to reference the value.
             objectAlias: "secrets-manager-username"  
-          - path: "dbname"
+          - path: "dbname"   # secret key in AWS, no need to reference the value.
             objectAlias: "secrets-manager-dbname"  
     region: "us-east-1"
   secretObjects:
@@ -153,7 +153,7 @@ spec:
           key: "dbname"   
 ```
 
-Step 5: Test Mounting the Secret on a Pod
+# Step 5: Test Mounting the Secret on a Pod
 ```bash
 apiVersion: apps/v1
 kind: Deployment
