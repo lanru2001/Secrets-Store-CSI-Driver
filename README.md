@@ -6,6 +6,10 @@ Below is the diagrammatic workflow of the Secret Stores CSI Driver, which gets s
 
 <img width="1724" height="888" alt="Screenshot 2025-10-29 at 10 08 34 PM" src="https://github.com/user-attachments/assets/c25f4865-127d-490f-bfc5-0cb9a8a3a663" />
 
+# AWS Secrets Manager
+<img width="1609" height="731" alt="Screenshot 2025-10-30 at 7 56 21 AM" src="https://github.com/user-attachments/assets/902dfbc1-b2e8-42de-acd4-bc7b0078de53" />
+
+
 ## How it works?
 1. The pod initiates the process by defining the SecretProviderClass object and uses a service account with the necessary permissions to authenticate Secrets Manager.
 2. The SecretProviderClass object contains the details of the secret stored in secrets manager..
