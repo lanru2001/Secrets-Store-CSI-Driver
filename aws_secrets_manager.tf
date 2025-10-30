@@ -1,5 +1,5 @@
 ######################################################################################
-#1. Install AWS Secrets Manager using Helm Chart
+#1. Install secrets store csi driver provider-aws using Helm Chart
 ######################################################################################
 
 resource "helm_release" "aws_secrets_manager" {
