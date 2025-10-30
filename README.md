@@ -205,7 +205,11 @@ spec:
 ## Verify to be sure that the secrets are mounted to the pod
 ```bash
 kubectl -n app  exec -it postgresql-7c97797d7c-wvn7l -- cat /mnt/secrets-store/secrets-manager-password
-opensource123                                                                                                                                     kubectl -n app  exec -it postgresql-7c97797d7c-wvn7l -- cat /mnt/secrets-store/secrets-manager-username
-dbuser                                                                                                                                                kubectl -n app  exec -it postgresql-7c97797d7c-wvn7l -- cat /mnt/secrets-store/secrets-manager-dbname
+opensource123
+
+kubectl -n app  exec -it postgresql-7c97797d7c-wvn7l -- cat /mnt/secrets-store/secrets-manager-username
+dbuser
+
+kubectl -n app  exec -it postgresql-7c97797d7c-wvn7l -- cat /mnt/secrets-store/secrets-manager-dbname
 appdb
 ```
