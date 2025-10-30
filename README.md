@@ -98,3 +98,107 @@ resource "kubernetes_service_account" "csi_secrets_store_driver_sa" {
   
 }
 ```
+Step 4: Create a SecretProviderClass
+```bash
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: external-secrets
+  namespace: app
+spec:
+  provider: aws
+  parameters:
+    objects: |
+      - objectName: "testing-secrets-manager"
+        objectType: "secretsmanager"
+        jmesPath:
+          - path: "secret"
+            objectAlias: "secrets-manager-secret"
+  secretObjects:
+    - secretName: external-secrets
+      type: Opaque
+      data:
+        - objectName: "secrets-manager-secret"
+          key: "secret"
+
+---
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: postgres-secrets
+  namespace: app
+spec:
+  provider: aws
+  parameters:
+    objects: |
+      - objectName: "app-postgres-secret"
+        objectType: "secretsmanager"
+        jmesPath:
+          - path: "password"
+            objectAlias: "secrets-manager-password"
+          - path: "username"
+            objectAlias: "secrets-manager-username"  
+          - path: "dbname"
+            objectAlias: "secrets-manager-dbname"  
+    region: "us-east-1"
+  secretObjects:
+    - secretName: postgres-secrets
+      type: Opaque
+      data:
+        - objectName: "secrets-manager-password"
+          key: "password"  
+        - objectName: "secrets-manager-username"
+          key: "username"   
+        - objectName: "secrets-manager-dbname"
+          key: "dbname"   
+```
+
+Step 5: Test Mounting the Secret on a Pod
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+  namespace: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      serviceAccountName: csi-secrets-store-driver-sa
+      containers:
+      - name: postgres
+        image: postgres:15
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: dbname
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: password
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: postgres-secrets
+```
