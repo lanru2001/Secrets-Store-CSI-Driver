@@ -2,7 +2,7 @@
 
 terraform {
   backend "s3" {
-    bucket         = "dlframe-tf-remote-dev-bkt"
+    bucket         = "tf-remote-dev-bkt"
     key            = "project/secrets_store_csi_driver"
     region         = "us-east-1"
   }
