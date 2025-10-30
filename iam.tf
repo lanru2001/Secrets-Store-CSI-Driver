@@ -45,7 +45,6 @@ resource "aws_iam_policy" "csi_secrets_store_policy" {
                     "secretsmanager:DescribeSecret"
                 ],
                 "Resource": [
-                    "arn:aws:secretsmanager:${var.aws_region}:${var.account_id}:secret:${var.secret_name}*",
                     "arn:aws:secretsmanager:${var.aws_region}:${var.account_id}:secret:app-postgres-secret*"
 
                 ]
