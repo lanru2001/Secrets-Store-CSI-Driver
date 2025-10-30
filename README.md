@@ -202,7 +202,7 @@ spec:
             volumeAttributes:
               secretProviderClass: postgres-secrets
 ```
-## Verify to be sure that the secrets are mounted to the pod
+## Verify to be sure that the secrets are mounted in the pod
 ```bash
 kubectl -n app  exec -it postgresql-7c97797d7c-wvn7l -- cat /mnt/secrets-store/secrets-manager-password
 opensource123
