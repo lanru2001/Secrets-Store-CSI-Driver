@@ -9,7 +9,3 @@ variable "aws_region" {
 variable "account_id" {
     default = "060866400888"
 }
-
-variable "secret_name" {
-    default = "testing-secrets-manager"
-}
