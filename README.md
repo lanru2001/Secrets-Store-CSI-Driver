@@ -4,7 +4,6 @@ Use Secrets Store CSI Driver to pull secrets from AWS Secrets Manager
 Secrets Store CSI Driver Workflow
 Below is the diagrammatic workflow of the Secret Stores CSI Driver, which gets secrets from the AWS Secrets Manager and mounts them in a pod.
 
-https://devopscube.com/content/images/2025/03/secret-store-csi-driver_2-1.jpg
 
 ## How it works?
 1. The pod initiates the process by defining the SecretProviderClass object and uses a service account with the necessary permissions to authenticate Secrets Manager.
