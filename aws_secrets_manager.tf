@@ -3,7 +3,7 @@
 ######################################################################################
 
 resource "helm_release" "aws_secrets_manager" {
-  #atomic           = true
+  atomic           = true
   force_update     = true
   name             = "aws-secrets-manager"
   chart            = "secrets-store-csi-driver-provider-aws"
