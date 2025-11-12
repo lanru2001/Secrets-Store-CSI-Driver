@@ -10,7 +10,7 @@ resource "helm_release" "secrets_store_csi_driver" {
   cleanup_on_fail  = true
   force_update     = true
   wait_for_jobs    = true
-  #atomic           = true
+  atomic           = true
   timeout          = "600"
 
   set = [
