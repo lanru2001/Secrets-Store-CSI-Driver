@@ -106,42 +106,20 @@ resource "kubernetes_service_account" "csi_secrets_store_driver_sa" {
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: external-secrets
-  namespace: app
-spec:
-  provider: aws
-  parameters:
-    objects: |
-      - objectName: "testing-secrets-manager" # secret name in AWS console
-        objectType: "secretsmanager"
-        jmesPath:
-          - path: "secret"       # secret key in AWS, no need to reference the value.
-            objectAlias: "secrets-manager-secret"
-  secretObjects:
-    - secretName: external-secrets
-      type: Opaque
-      data:
-        - objectName: "secrets-manager-secret"
-          key: "secret"
-
----
-apiVersion: secrets-store.csi.x-k8s.io/v1
-kind: SecretProviderClass
-metadata:
   name: postgres-secrets
   namespace: app
 spec:
   provider: aws
   parameters:
     objects: |
-      - objectName: "app-postgres-secret" # secret name in AWS console
+      - objectName: "app-postgres-secret"
         objectType: "secretsmanager"
         jmesPath:
-          - path: "password" # secret key in AWS, no need to reference the value.
+          - path: "password"
             objectAlias: "secrets-manager-password"
-          - path: "username" # secret key in AWS, no need to reference the value.
+          - path: "username"
             objectAlias: "secrets-manager-username"  
-          - path: "dbname"   # secret key in AWS, no need to reference the value.
+          - path: "dbname"
             objectAlias: "secrets-manager-dbname"  
     region: "us-east-1"
   secretObjects:
@@ -153,7 +131,7 @@ spec:
         - objectName: "secrets-manager-username"
           key: "username"   
         - objectName: "secrets-manager-dbname"
-          key: "dbname"   
+          key: "dbname"     
 ```
 
 ## Step 5: Test Mounting the Secret on a Pod
