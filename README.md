@@ -6,7 +6,7 @@ Below is the diagrammatic workflow of the Secret Stores CSI Driver, which gets s
 
 <img width="1724" height="888" alt="Screenshot 2025-10-29 at 10 08 34 PM" src="https://github.com/user-attachments/assets/c25f4865-127d-490f-bfc5-0cb9a8a3a663" />
 
-# AWS Secrets Manager
+## AWS Secrets Manager
 <img width="1632" height="471" alt="Screenshot 2025-11-12 at 1 30 48 PM" src="https://github.com/user-attachments/assets/5e8f2b56-38eb-4415-bc39-903cac879d32" />
 
 ## How it works?
