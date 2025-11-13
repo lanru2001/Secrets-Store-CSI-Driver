@@ -155,22 +155,6 @@ spec:
       containers:
       - name: postgres
         image: postgres:15
-        env:
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: dbname
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: username
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets
-              key: password
         volumeMounts:
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
