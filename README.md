@@ -159,6 +159,13 @@ spec:
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "/mnt/secrets-store/secrets-manager-password"
+        - name: POSTGRES_USER
+          value: "/mnt/secrets-store/secrets-manager-username"  
+        - name: POSTGRES_DB
+          value: "/mnt/secrets-store/secrets-manager-dbname"
       volumes:
         - name: secrets-store-inline
           csi:
