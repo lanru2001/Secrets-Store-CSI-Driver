@@ -2,7 +2,7 @@
 Use Secrets Store CSI Driver to pull secrets from AWS Secrets Manager
 
 ## Secrets Store CSI Driver Workflow
-Below is the diagrammatic workflow of the Secret Stores CSI Driver, which gets secrets from the AWS Secrets Manager and mounts them in a pod.
+Below is the diagrammatic workflow of the Secrets Store CSI Driver, which gets secrets from the AWS Secrets Manager and mounts them in a pod.
 
 <img width="1724" height="888" alt="Screenshot 2025-10-29 at 10 08 34 PM" src="https://github.com/user-attachments/assets/c25f4865-127d-490f-bfc5-0cb9a8a3a663" />
 
@@ -14,7 +14,7 @@ Below is the diagrammatic workflow of the Secret Stores CSI Driver, which gets s
 2. The SecretProviderClass object contains the details of the secret stored in secrets manager..
 3. The CSI driver uses the secret details on SecretProviderClass to fetch the secret from the external secret store and mounts it inside the pod as a file.
 
-## Step 1: Create an IAM Policy
+## Step 1: Create an IAM Role/Policy
 ```bash
 resource "aws_iam_role" "csi_secrets_store_role" {
   name = "CsiSecretsStoreRole"
